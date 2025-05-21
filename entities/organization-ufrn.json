@@ -1,0 +1,48 @@
+{
+    "id": "Organization:UFRN",
+    "type": "Organization",
+    "organizationType": {
+      "value": "EducationalInstitution",
+      "type": "Text"
+    },
+    "name": {
+      "value": "Universidade Federal do Rio Grande do Norte",
+      "type": "Text"
+    },
+    "acronym": {
+      "value": "UFRN",
+      "type": "Text"
+    },
+    "address": {
+      "value": "Av. Senador Salgado Filho, 3000 - Lagoa Nova, Natal - RN, 59078-970",
+      "type": "Text"
+    },
+    "website": {
+      "value": "https://www.ufrn.br",
+      "type": "URL"
+    },
+    "email": {
+      "value": "reitoria@ufrn.br",
+      "type": "Text"
+    },
+    "phoneNumber": {
+      "value": "+55 84 3342-2222",
+      "type": "Text"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [-35.203298, -5.836672]
+      }
+    },
+    "institutionType": {
+      "value": "PublicUniversity",
+      "type": "Text"
+    },
+    "founded": {
+      "value": "1958-12-18",
+      "type": "Date"
+    }
+  }
+  

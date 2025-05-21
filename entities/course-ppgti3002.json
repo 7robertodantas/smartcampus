@@ -1,0 +1,88 @@
+{
+    "id": "CourseInstance:PPGTI3002-2025",
+    "type": "CourseInstance",
+    "refOrganization": {
+      "value": "Organization-UFRN",
+      "type": "Relationship"
+    },
+    "refAcademicCourse": {
+      "type": "Relationship",
+      "value": "Course:UFRN:PPGTI"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [-35.2035, -5.8365]
+      }
+    },
+    "course": {
+      "type": "Text",
+      "value": "Tecnologia da Informação"
+    },
+    "courseRef": {
+      "type": "Relationship",
+      "value": "Course:PPGTI3002"
+    },
+    "degreeType": {
+      "type": "Text",
+      "value": "Postgraduate"
+    },
+    "className": {
+      "type": "Text",
+      "value": "PPGTI3002 - Aprendizado por Reforço"
+    },
+    "classSchedule": {
+      "type": "StructuredValue",
+      "value": [
+        {
+          "day": "Monday",
+          "startTime": "16:00",
+          "endTime": "18:00"
+        },
+        {
+          "day": "Wednesday",
+          "startTime": "16:00",
+          "endTime": "18:00"
+        }
+      ]
+    },
+    "studentCount": {
+      "type": "Integer",
+      "value": 15
+    },
+    "usesLab": {
+      "type": "Boolean",
+      "value": true
+    },
+    "evaluationDates": {
+      "type": "StructuredValue",
+      "value": ["2025-10-01"]
+    },
+    "teacher": {
+      "type": "Text",
+      "value": "Prof.ª Dra. Carla Mendes"
+    },
+    "workload": {
+      "type": "StructuredValue",
+      "value": {
+        "theoretical": 20,
+        "practical": 10,
+        "distance": 0,
+        "total": 30
+      }
+    },
+    "evaluationMethod": {
+      "type": "Text",
+      "value": "CONCEITO"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Processos de decisao de Markov. Programacao dinamica. Metodos de Monte Carlo. Aprendizado da diferenca temporal. Aproximacao de funcoes. Generalizacao. Aplicacoes."
+    },
+    "flexibleSchedule": {
+      "type": "Boolean",
+      "value": true
+    }
+  }
+  

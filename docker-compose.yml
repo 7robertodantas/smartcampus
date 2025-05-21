@@ -1,0 +1,12 @@
+services:
+  orion: 
+     image: telefonicaiot/fiware-orion
+     ports:
+       - "1026:1026"
+     depends_on:
+       - mongo
+     command: -dbURI mongodb://mongo
+  mongo:
+    image: mongo:8.0
+    # volumes:
+    #  - ./data/mongo:/data/db

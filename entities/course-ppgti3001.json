@@ -1,0 +1,84 @@
+{
+    "id": "CourseInstance:PPGTI3001-2025",
+    "type": "CourseInstance",
+    "refOrganization": {
+      "value": "Organization-UFRN",
+      "type": "Relationship"
+    },
+    "refAcademicCourse": {
+      "type": "Relationship",
+      "value": "Course:UFRN:PPGTI"
+    },
+    "location": {
+      "type": "geo:json",
+      "value": {
+        "type": "Point",
+        "coordinates": [-35.2035, -5.8365]
+      }
+    },
+    "course": {
+      "type": "Text",
+      "value": "Tecnologia da Informação"
+    },
+    "degreeType": {
+      "type": "Text",
+      "value": "Postgraduate"
+    },
+    "className": {
+      "type": "Text",
+      "value": "PPGTI3001 - Aprendizado de Máquina"
+    },
+    "classSchedule": {
+      "type": "StructuredValue",
+      "value": [
+        {
+          "day": "Tuesday",
+          "startTime": "14:00",
+          "endTime": "16:00"
+        },
+        {
+          "day": "Thursday",
+          "startTime": "14:00",
+          "endTime": "16:00"
+        }
+      ]
+    },
+    "studentCount": {
+      "type": "Integer",
+      "value": 18
+    },
+    "usesLab": {
+      "type": "Boolean",
+      "value": true
+    },
+    "evaluationDates": {
+      "type": "StructuredValue",
+      "value": ["2025-09-10"]
+    },
+    "teacher": {
+      "type": "Text",
+      "value": "Prof. Dr. João Silva"
+    },
+    "workload": {
+      "type": "StructuredValue",
+      "value": {
+        "theoretical": 20,
+        "practical": 10,
+        "distance": 0,
+        "total": 30
+      }
+    },
+    "evaluationMethod": {
+      "type": "Text",
+      "value": "CONCEITO"
+    },
+    "description": {
+      "type": "Text",
+      "value": "Introducao ao Aprendizado Supervisionado de Maquina. Classificacao de Dados. Tecnicas de classificacao. Metricas de Desempenho. Comites. Aprendizado semi-supervisionado. Teste estatistico. Aplicacoes."
+    },
+    "flexibleSchedule": {
+      "type": "Boolean",
+      "value": true
+    }
+  }
+  
