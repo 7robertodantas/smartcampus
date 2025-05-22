@@ -6,7 +6,23 @@ services:
      depends_on:
        - mongo
      command: -dbURI mongodb://mongo
+     networks:
+      - fiware
   mongo:
     image: mongo:8.0
-    # volumes:
-    #  - ./data/mongo:/data/db
+    networks:
+      - fiware  
+  weather-context-enricher:
+    build:
+      context: ./services
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ORION_URL=http://orion:1026/v2
+      - CALLBACK_URL=http://weather-context-enricher:5000/notify
+    depends_on:
+      - orion
+    networks:
+      - fiware
+networks:
+  fiware:

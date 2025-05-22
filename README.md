@@ -26,7 +26,7 @@ To get started with Smart Campus, follow these steps:
 
 3. Start the services:
     ```bash
-    docker-compose up
+    docker-compose up --build
     ```
 
 4. Access the application at `http://localhost:1026`.
