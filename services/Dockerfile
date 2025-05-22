@@ -19,4 +19,4 @@ COPY weather_context_enricher.py .
 EXPOSE 5000
 
 # Define the entrypoint command using Gunicorn for production
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--log-level", "debug", "--capture-output", "weather_context_enricher:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "weather_context_enricher:app"]
