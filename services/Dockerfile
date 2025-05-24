@@ -20,6 +20,7 @@ ARG APP_FILE
 ENV APP_FILE=${APP_FILE}
 
 # Copy the application code
+COPY fiware.py .
 COPY ${APP_FILE}.py .
 
 CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:5000 ${APP_FILE}:app"]
