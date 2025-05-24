@@ -11,6 +11,34 @@ headers = {
     "Accept": "application/json"
 }
 
+
+get_delete_headers = {
+    "Accept": "application/json"
+}
+
+def delete_all_entities():
+    print("[INFO] Deleting all existing entities...")
+    try:
+        list_url = f"{ORION_URL}?options=keyValues"
+        response = requests.get(list_url, headers=get_delete_headers)
+
+        if response.status_code == 200:
+            entities = response.json()
+            for entity in entities:
+                entity_id = entity.get("id")
+                if entity_id:
+                    delete_url = f"{ORION_URL}/{entity_id}"
+                    del_resp = requests.delete(delete_url, headers=get_delete_headers)
+                    if del_resp.status_code in [204, 404]:
+                        print(f"[OK] Deleted entity: {entity_id}")
+                    else:
+                        print(f"[ERROR] Failed to delete {entity_id}: {del_resp.status_code}")
+        else:
+            print(f"[ERROR] Failed to fetch entities: {response.status_code}")
+            print(f"        {response.text}")
+    except Exception as e:
+        print(f"[EXCEPTION] Error deleting entities: {e}")
+
 def create_entity_from_file(filepath):
     try:
         with open(filepath, 'r', encoding='utf-8') as file:
@@ -34,6 +62,8 @@ def main():
     if not os.path.isdir(ENTITIES_DIR):
         print(f"[ERROR] Folder '{ENTITIES_DIR}' not found.")
         return
+    
+    delete_all_entities()
 
     for filename in os.listdir(ENTITIES_DIR):
         if filename.endswith(".json"):
