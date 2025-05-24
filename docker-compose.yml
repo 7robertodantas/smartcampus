@@ -11,6 +11,8 @@ services:
 
   mongo:
     image: mongo:8.0
+    volumes:
+      - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - fiware
 

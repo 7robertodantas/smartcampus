@@ -1,4 +1,3 @@
-import time
 import logging
 import sys
 import json
@@ -29,8 +28,11 @@ logger.propagate = False
 
 HEADERS = {"Content-Type": "application/json"}
 
+
 def remover_acentos(texto):
-    return unicodedata.normalize("NFKD", texto).encode("ASCII", "ignore").decode("ASCII")
+    return (
+        unicodedata.normalize("NFKD", texto).encode("ASCII", "ignore").decode("ASCII")
+    )
 
 
 def formatar_iso_utc(hora_str: str) -> str:
@@ -38,9 +40,10 @@ def formatar_iso_utc(hora_str: str) -> str:
         year=datetime.now().year,
         month=datetime.now().month,
         day=datetime.now().day,
-        tzinfo=timezone.utc
+        tzinfo=timezone.utc,
     )
     return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
 
 @app.route("/notify", methods=["POST"])
 def notify_weather():
@@ -68,7 +71,9 @@ def notify_weather():
         for turma in course_instances:
             horarios = turma.get("classSchedule", {}).get("value", [])
             if not isinstance(horarios, list):
-                logger.error(f"'classSchedule.value' não é uma lista na turma {turma.get('id')}")
+                logger.error(
+                    f"'classSchedule.value' não é uma lista na turma {turma.get('id')}"
+                )
                 continue
 
             agora = datetime.now(timezone.utc)
@@ -88,27 +93,45 @@ def notify_weather():
 
                 try:
                     inicio_horario = datetime.strptime(tempo_inicio, "%H:%M").replace(
-                        year=agora.year, month=agora.month, day=agora.day, tzinfo=timezone.utc
+                        year=agora.year,
+                        month=agora.month,
+                        day=agora.day,
+                        tzinfo=timezone.utc,
                     )
                     fim_horario = datetime.strptime(tempo_fim, "%H:%M").replace(
-                        year=agora.year, month=agora.month, day=agora.day, tzinfo=timezone.utc
+                        year=agora.year,
+                        month=agora.month,
+                        day=agora.day,
+                        tzinfo=timezone.utc,
                     )
                 except ValueError as e:
-                    logger.error(f"Erro ao converter horários na turma {turma.get('id')}: {e}")
+                    logger.error(
+                        f"Erro ao converter horários na turma {turma.get('id')}: {e}"
+                    )
                     continue
-                
-                if agora + timedelta(hours=qtd_horas) >= inicio_horario and agora <= fim_horario:
+
+                if (
+                    agora + timedelta(hours=qtd_horas) >= inicio_horario
+                    and agora <= fim_horario
+                ):
                     nome_turma = turma.get("className", {}).get("value", "Desconhecida")
-                    logger.info(f"Turma '{nome_turma}' com aula em até {qtd_horas}h ({tempo_inicio} - {tempo_fim})")
+                    logger.info(
+                        f"Turma '{nome_turma}' com aula em até {qtd_horas}h ({tempo_inicio} - {tempo_fim})"
+                    )
                     encontrou_aula_valida = True
                     enviar_alerta(turma, tempo_inicio, tempo_fim)
-                    logger.warning(f"Enviando alerta para a turma {turma.get('id')} ({nome_turma})")
+                    logger.warning(
+                        f"Enviando alerta para a turma {turma.get('id')} ({nome_turma})"
+                    )
                     break
 
             if not encontrou_aula_valida:
-                logger.info(f"Nenhuma aula válida em até {qtd_horas}h na turma {turma.get('id')}")
+                logger.info(
+                    f"Nenhuma aula válida em até {qtd_horas}h na turma {turma.get('id')}"
+                )
 
     return "", 200
+
 
 def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
     turma_id = turma.get("id")
@@ -119,7 +142,7 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
         return
 
     descricao_raw = f"Possivel chuva durante a aula da turma '{nome_turma}' entre {tempo_inicio} e {tempo_fim}."
-    descricao = remover_acentos(descricao_raw).replace('"', '').replace("'", "")
+    descricao = remover_acentos(descricao_raw).replace('"', "").replace("'", "")
 
     alerta = {
         "id": f"Alert:Weather:{turma_id}",
@@ -127,8 +150,14 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
         "category": {"value": "weather", "type": "Text"},
         "subCategory": {"value": "rainfall", "type": "Text"},
         "description": {"value": descricao, "type": "Text"},
-        "location": {"type": "geo:json", "value": {"type": "Point", "coordinates": coordenadas}},
-        "dateIssued": {"type": "DateTime", "value": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")},
+        "location": {
+            "type": "geo:json",
+            "value": {"type": "Point", "coordinates": coordenadas},
+        },
+        "dateIssued": {
+            "type": "DateTime",
+            "value": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+        },
         "validFrom": {"type": "DateTime", "value": formatar_iso_utc(tempo_inicio)},
         "validTo": {"type": "DateTime", "value": formatar_iso_utc(tempo_fim)},
         "alertSource": {"value": "Sistema de Monitoramento de Clima", "type": "Text"},
@@ -138,7 +167,9 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
 
     logger.warning(f"Enviando alerta para a turma {turma_id} ({nome_turma})")
     try:
-        resp = requests.post("http://orion:1026/v2/entities", headers=HEADERS, json=alerta)
+        resp = requests.post(
+            "http://orion:1026/v2/entities", headers=HEADERS, json=alerta
+        )
         if resp.status_code in (201, 204):
             logger.info(f"Alerta enviado para a turma '{nome_turma}'.")
         else:
@@ -146,8 +177,13 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
     except Exception as exc:
         logger.exception(f"Erro ao enviar alerta: {exc}")
 
-def buscar_turmas_proximas_ou_relacionadas(latitude: float, longitude: float, raio_metros: int = 5000):
-    logger.info(f"Buscando turmas próximas a: lat={latitude}, lon={longitude}, raio={raio_metros}m")
+
+def buscar_turmas_proximas_ou_relacionadas(
+    latitude: float, longitude: float, raio_metros: int = 5000
+):
+    logger.info(
+        f"Buscando turmas próximas a: lat={latitude}, lon={longitude}, raio={raio_metros}m"
+    )
     try:
         params_geo = {
             "type": "CourseInstance",
@@ -174,6 +210,7 @@ def buscar_turmas_proximas_ou_relacionadas(latitude: float, longitude: float, ra
 
     return turmas_geo
 
+
 def register_subscription():
     global subscription_created
     if subscription_created:
@@ -198,6 +235,7 @@ def register_subscription():
         logger.info("Inscrição criada com sucesso.")
     else:
         logger.error("Falha ao criar inscrição.")
+
 
 def esperar_orion_disponivel(max_tentativas=100, intervalo=5):
     logger.info("Verificando disponibilidade do Orion...")
