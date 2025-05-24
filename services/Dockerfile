@@ -12,11 +12,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code
-COPY weather_context_enricher.py .
-
 # Expose the application port
 EXPOSE 5000
 
 # Define the entrypoint command using Gunicorn for production
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "weather_context_enricher:app"]
+ARG APP_FILE
+ENV APP_FILE=${APP_FILE}
+
+# Copy the application code
+COPY ${APP_FILE}.py .
+
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:5000 ${APP_FILE}:app"]

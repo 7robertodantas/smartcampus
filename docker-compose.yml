@@ -1,5 +1,5 @@
 services:
-  orion: 
+  orion:
     image: telefonicaiot/fiware-orion
     ports:
       - "1026:1026"
@@ -12,35 +12,29 @@ services:
   mongo:
     image: mongo:8.0
     networks:
-      - fiware  
+      - fiware
 
-  mongo-init:
-    image: mongo:8.0
+  weather-alert-course:
+    build:
+      context: ./services
+      dockerfile: Dockerfile
+      args:
+        - APP_FILE=weather_alert_course
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ORION_URL=http://orion:1026/v2
+      - CALLBACK_URL=http://weather-alert-course:5000/notify
     depends_on:
-      - mongo
+      - orion
     networks:
       - fiware
-    entrypoint: >
-      bash -c '
-        echo "[INIT] Esperando MongoDB ficar acessível na porta 27017..." &&
-        until mongosh --host mongo --eval "db.adminCommand(\"ping\")" &> /dev/null; do
-          sleep 2
-        done &&
-        echo "[INIT] MongoDB está pronto. Criando índice 2dsphere..." &&
-        mongosh mongodb://mongo/orion --eval "
-          db.entities.createIndex({\"location.value\": \"2dsphere\"});
-        " &&
-        echo "[INIT] Verificando índices atuais..." &&
-        mongosh mongodb://mongo/orion --eval "
-          db.entities.getIndexes().forEach(i => printjson(i));
-        " &&
-        echo "[INIT] Finalizado com sucesso."
-      '
 
   weather-context-enricher:
     build:
       context: ./services
       dockerfile: Dockerfile
+      args:
+        - APP_FILE=weather_context_enricher
     environment:
       - PYTHONUNBUFFERED=1
       - ORION_URL=http://orion:1026/v2
