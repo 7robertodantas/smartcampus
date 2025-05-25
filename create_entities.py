@@ -1,9 +1,11 @@
 import os
 import json
 import requests
+import sys
+import time
 
 # === Configuration ===
-ORION_URL = "http://localhost:1026/v2/entities"
+ORION_URL = "http://orion:1026/v2/entities"
 ENTITIES_DIR = "./entities"
 
 headers = {
@@ -58,7 +60,64 @@ def create_entity_from_file(filepath):
     except Exception as e:
         print(f"[EXCEPTION] Error processing {filepath}: {e}")
 
+def esperar_orion_disponivel(max_tentativas=100, intervalo=5):
+    print("[INFO] Verificando disponibilidade do Orion...")
+    
+    url_teste = "http://orion:1026/version"
+
+    for tentativa in range(max_tentativas):
+        try:
+            resposta = requests.get(url_teste)
+            if resposta.status_code == 200:
+                print(f"[OK] Orion respondeu na tentativa {tentativa + 1}")
+                return
+        except requests.exceptions.RequestException as e:
+            print(f"[AGUARDANDO] Orion ainda não está pronto: {e}")
+        time.sleep(intervalo)
+    print("[FALHA] Orion não respondeu a tempo.")
+    sys.exit(1)
+
+from datetime import datetime, timedelta, timezone
+
+def atualizar_horario_turma():
+    turma_id = "CourseInstance:PPGTI3001-2025"  # Altere para o ID da sua turma
+
+    print(f"[INFO] Atualizando horário da turma {turma_id}...")
+
+    update_url = f"{ORION_URL}/{turma_id}/attrs/classSchedule"
+    
+    agora = datetime.now(timezone.utc)
+    novo_dia = agora.strftime("%A")
+    novo_inicio = (agora + timedelta(hours=1, minutes=30)).strftime("%H:%M")
+    novo_fim = (agora + timedelta(hours=2, minutes=30)).strftime("%H:%M")
+
+    print(f"[INFO] Novo dia: {novo_dia}")
+    print(f"[INFO] Horário início: {novo_inicio}")
+    print(f"[INFO] Horário fim: {novo_fim}")
+
+    novo_horario = {
+        "value": [
+            {
+                "day": novo_dia,
+                "startTime": novo_inicio,
+                "endTime": novo_fim
+            }
+        ],
+        "type": "StructuredValue"
+    }
+
+    try:
+        response = requests.put(update_url, headers=headers, json=novo_horario)
+        if response.status_code in [204, 201]:
+            print(f"[OK] Horário da turma {turma_id} atualizado com sucesso.")
+        else:
+            print(f"[ERRO] Falha ao atualizar horário: {response.status_code}")
+            print(response.text)
+    except Exception as e:
+        print(f"[EXCEPTION] Erro ao atualizar horário: {e}")
+
 def main():
+    esperar_orion_disponivel()
     if not os.path.isdir(ENTITIES_DIR):
         print(f"[ERROR] Folder '{ENTITIES_DIR}' not found.")
         return
@@ -69,6 +128,9 @@ def main():
         if filename.endswith(".json"):
             filepath = os.path.join(ENTITIES_DIR, filename)
             create_entity_from_file(filepath)
+    
+    atualizar_horario_turma()
+    print("[INFO] All entities created and updated successfully.")
 
 if __name__ == "__main__":
     main()

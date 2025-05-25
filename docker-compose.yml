@@ -44,5 +44,15 @@ services:
     networks:
       - fiware
 
+  testes_init:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      depends_on:
+        - orion
+        - mongo
+        
+      networks:
+        - fiware
 networks:
   fiware:

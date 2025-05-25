@@ -29,7 +29,7 @@ To get started with Smart Campus, follow these steps:
     docker-compose up --build
     ```
 
-4. Access the application at `http://localhost:1026`.
+4. Access the application at `http://orion:1026`.
 
 ## Creating entities
 
@@ -42,7 +42,7 @@ To create entities in the Smart Campus project, you can use the `data/create_ent
     python create_entities.py
     ```
 
-2. The script will send HTTP POST requests to the Orion Context Broker to create predefined entities. Ensure the broker is running and accessible at `http://localhost:1026`.
+2. The script will send HTTP POST requests to the Orion Context Broker to create predefined entities. Ensure the broker is running and accessible at `http://orion:1026`.
 
 
 ## Useful Links

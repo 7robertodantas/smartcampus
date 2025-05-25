@@ -1,0 +1,3 @@
+# Buscando alertas no Orion Context Broker
+curl -X GET "http://localhost:1026/v2/entities?type=Alert" -H "Accept: application/json"
+

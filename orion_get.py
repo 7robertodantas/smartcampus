@@ -2,7 +2,7 @@ import json
 import requests
 
 # === Configuration ===
-ORION_URL = "http://localhost:1026/v2/entities"
+ORION_URL = "http://orion:1026/v2/entities"
 
 headers = {
     "Accept": "application/json"
