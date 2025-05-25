@@ -144,8 +144,9 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
     descricao_raw = f"Possivel chuva durante a aula da turma '{nome_turma}' entre {tempo_inicio} e {tempo_fim}."
     descricao = remover_acentos(descricao_raw).replace('"', "").replace("'", "")
 
-    alerta = {
-        "id": f"Alert:Weather:{turma_id}",
+    alerta_id = f"Alert:Weather:{turma_id}"
+    alerta_completo = {
+        "id": alerta_id,
         "type": "Alert",
         "category": {"value": "weather", "type": "Text"},
         "subCategory": {"value": "rainfall", "type": "Text"},
@@ -166,6 +167,7 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
     }
 
     logger.warning(f"Enviando alerta para a turma {turma_id} ({nome_turma})")
+
     try:
         resp = requests.post(
             "http://orion:1026/v2/entities", headers=HEADERS, json=alerta
@@ -173,9 +175,10 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
         if resp.status_code in (201, 204):
             logger.info(f"Alerta enviado para a turma '{nome_turma}'.")
         else:
-            logger.error(f"Falha ao enviar alerta: {resp.status_code}\n{resp.text}")
+            logger.error(f"Falha ao processar alerta: {resp.status_code}\n{resp.text}")
+
     except Exception as exc:
-        logger.exception(f"Erro ao enviar alerta: {exc}")
+        logger.exception(f"Erro ao enviar/atualizar alerta: {exc}")
 
 
 def buscar_turmas_proximas_ou_relacionadas(
