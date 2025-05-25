@@ -170,10 +170,21 @@ def enviar_alerta(turma, tempo_inicio: str, tempo_fim: str) -> None:
 
     try:
         resp = requests.post(
-            "http://orion:1026/v2/entities", headers=HEADERS, json=alerta
+            ORION_URL + "/v2/entities", headers=HEADERS, json=alerta_completo
         )
-        if resp.status_code in (201, 204):
-            logger.info(f"Alerta enviado para a turma '{nome_turma}'.")
+
+        if resp.status_code == 422 and "Already Exists" in resp.text:
+            logger.info(f"Alerta já existe. Atualizando: {alerta_id}")
+
+            alerta_update = alerta_completo.copy()
+            alerta_update.pop("id", None)
+            alerta_update.pop("type", None)
+
+            update_url = f"{ORION_URL}/v2/entities/{alerta_id}/attrs"
+            resp = requests.put(update_url, headers=HEADERS, json=alerta_update)
+
+        if resp.status_code in (200, 201, 204):
+            logger.info(f"Alerta processado com sucesso para a turma '{nome_turma}'.")
         else:
             logger.error(f"Falha ao processar alerta: {resp.status_code}\n{resp.text}")
 
@@ -194,7 +205,7 @@ def buscar_turmas_proximas_ou_relacionadas(
             "geometry": "point",
             "coords": f"{latitude},{longitude}",
         }
-        response_geo = requests.get(f"{ORION_URL}/entities", params=params_geo)
+        response_geo = requests.get(f"{ORION_URL}/v2/entities", params=params_geo)
         response_geo.raise_for_status()
         turmas_geo = response_geo.json()
         logger.info(f"Total de turmas próximas: {len(turmas_geo)}")

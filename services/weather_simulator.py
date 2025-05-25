@@ -1,8 +1,10 @@
 import requests
 import time
 import logging
+import os
 from datetime import datetime, timezone
 import random
+import fiware
 
 # Configuração de logging
 logger = logging.getLogger()
@@ -13,9 +15,8 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
 
-ORION_URL = "http://orion:1026/v2"
+ORION_URL = os.environ.get("ORION_URL")
 ENTITY_ID = "WeatherStation:CampusNatal"
-CALLBACK_URL = "http://weather-alert-course:5000/notify"
 COORDS = [-35.2035, -5.8365]
 
 HEADERS = {"Content-Type": "application/json", "Accept": "application/json"}
@@ -36,17 +37,7 @@ def create_entity():
         },
     }
 
-    url = f"{ORION_URL}/entities"
-    try:
-        res = requests.post(url, headers=HEADERS, json=entity)
-        if res.status_code in [201, 204]:
-            logger.info("Entidade criada com sucesso.")
-        elif res.status_code == 422:
-            logger.warning("Entidade já existe.")
-        else:
-            logger.error(f"Criando entidade: {res.status_code} - {res.text}")
-    except Exception as e:
-        logger.exception(f"Erro ao criar entidade: {e}")
+    fiware.create_entity(entity)
 
 
 def upsert_weather_station(weathercode, timestamp):
@@ -59,11 +50,13 @@ def upsert_weather_station(weathercode, timestamp):
         },
     }
 
-    url = f"{ORION_URL}/entities/{ENTITY_ID}/attrs"
+    url = f"{ORION_URL}/v2/entities/{ENTITY_ID}/attrs"
     try:
         res = requests.post(url, headers=HEADERS, json=attrs)
         if res.status_code in [204, 201]:
-            logger.info(f"[{timestamp}] Atualizado: {ENTITY_ID} com weathercode {weathercode}")
+            logger.info(
+                f"[{timestamp}] Atualizado: {ENTITY_ID} com weathercode {weathercode}"
+            )
         else:
             logger.error(f"{res.status_code} - {res.text}")
     except Exception as e:
@@ -92,6 +85,7 @@ def simulate_weather_loop():
 
 
 def main():
+    fiware.wait_for_orion()
     create_entity()
     simulate_weather_loop()
 

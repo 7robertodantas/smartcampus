@@ -22,9 +22,10 @@ services:
       dockerfile: Dockerfile
       args:
         - APP_FILE=weather_alert_course
+        - CONFIG=server
     environment:
       - PYTHONUNBUFFERED=1
-      - ORION_URL=http://orion:1026/v2
+      - ORION_URL=http://orion:1026
       - CALLBACK_URL=http://weather-alert-course:5000/notify
     depends_on:
       - orion
@@ -37,24 +38,48 @@ services:
       dockerfile: Dockerfile
       args:
         - APP_FILE=weather_context_enricher
+        - CONFIG=server
     environment:
       - PYTHONUNBUFFERED=1
-      - ORION_URL=http://orion:1026/v2
+      - ORION_URL=http://orion:1026
       - CALLBACK_URL=http://weather-context-enricher:5000/notify
     depends_on:
       - orion
     networks:
       - fiware
 
-  testes_init:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      depends_on:
-        - orion
-        - mongo
-        
-      networks:
-        - fiware
+  weather-simulator:
+    build:
+      context: ./services
+      dockerfile: Dockerfile
+      args:
+        - APP_FILE=weather_simulator
+        - CONFIG=script
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ORION_URL=http://orion:1026
+    depends_on:
+      - orion
+    networks:
+      - fiware
+
+  course-instance-simulator:
+    build:
+      context: ./services
+      dockerfile: Dockerfile
+      args:
+        - APP_FILE=course_instance_simulator
+        - CONFIG=script
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ORION_URL=http://orion:1026
+      - ENTITIES_DIR=./entities
+    depends_on:
+      - orion
+    networks:
+      - fiware
+    volumes:
+      - ./entities:/app/entities:ro
+
 networks:
   fiware:

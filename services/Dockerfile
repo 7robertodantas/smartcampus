@@ -23,4 +23,7 @@ ENV APP_FILE=${APP_FILE}
 COPY fiware.py .
 COPY ${APP_FILE}.py .
 
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:5000 ${APP_FILE}:app"]
+ARG CONFIG=server
+ENV CONFIG=${CONFIG}
+
+CMD ["sh", "-c", "if [ \"$CONFIG\" = \"server\" ]; then gunicorn --bind 0.0.0.0:5000 ${APP_FILE}:app; else python ${APP_FILE}.py; fi"]
