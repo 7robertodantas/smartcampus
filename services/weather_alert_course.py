@@ -2,7 +2,6 @@ import logging
 import sys
 import json
 import os
-import requests
 from datetime import datetime, timedelta, timezone
 from flask import Flask, request
 import fiware
@@ -11,7 +10,6 @@ import unicodedata
 app = Flask(__name__)
 
 ENTITY_ID = "WeatherStation:CampusNatal"
-ORION_URL = os.environ.get("ORION_URL")
 CALLBACK_URL = os.environ.get("CALLBACK_URL")
 subscription_created = False
 
@@ -162,25 +160,8 @@ def send_alert(course, start_time: str, end_time: str) -> None:
     logger.warning(f"Sending alert for course {course_id} ({course_id_value})")
 
     try:
-        resp = requests.post(
-            ORION_URL + "/v2/entities", headers=HEADERS, json=full_alert
-        )
-
-        if resp.status_code == 422 and "Already Exists" in resp.text:
-            logger.info(f"Alert already exists. Updating: {alert_id}")
-
-            alert_update = full_alert.copy()
-            alert_update.pop("id", None)
-            alert_update.pop("type", None)
-
-            update_url = f"{ORION_URL}/v2/entities/{alert_id}/attrs"
-            resp = requests.put(update_url, headers=HEADERS, json=alert_update)
-
-        if resp.status_code in (200, 201, 204):
-            logger.info(f"Alert processed successfully for course '{course_id_value}'.")
-        else:
-            logger.error(f"Failed to process alert: {resp.status_code}\n{resp.text}")
-
+        fiware.upsert_entity(full_alert)
+        logger.info(f"Alert processed successfully for course '{course_id_value}'.")
     except Exception as exc:
         logger.exception(f"Error sending/updating alert: {exc}")
 
@@ -188,34 +169,9 @@ def send_alert(course, start_time: str, end_time: str) -> None:
 def find_nearby_or_related_courses(
     latitude: float, longitude: float, radius_meters: int = 5000
 ):
-    logger.info(
-        f"Searching for courses near: lat={latitude}, lon={longitude}, radius={radius_meters}m"
+    return fiware.find_entities_nearby(
+        "CourseInstance", latitude, longitude, radius_meters
     )
-    try:
-        params_geo = {
-            "type": "CourseInstance",
-            "georel": f"near;maxDistance:{radius_meters}",
-            "geometry": "point",
-            "coords": f"{latitude},{longitude}",
-        }
-        response_geo = requests.get(f"{ORION_URL}/v2/entities", params=params_geo)
-        response_geo.raise_for_status()
-        courses_geo = response_geo.json()
-        logger.info(f"Total nearby courses: {len(courses_geo)}")
-
-        for i, course in enumerate(courses_geo, start=1):
-            name = course.get("id", "Unknown")
-            coords = course.get("location", {}).get("value", {}).get("coordinates")
-            if coords:
-                lat, lon = coords[1], coords[0]
-                logger.info(f"{i}. {name} → Coordinates: lat={lat}, lon={lon}")
-            else:
-                logger.warning(f"{i}. {name} → Coordinates missing")
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to search for courses with georel: {e}")
-        courses_geo = []
-
-    return courses_geo
 
 
 def register_subscription():

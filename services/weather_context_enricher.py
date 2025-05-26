@@ -9,7 +9,6 @@ import fiware
 app = Flask(__name__)
 
 ENTITY_ID = "CourseInstance"
-ORION_URL = os.environ.get("ORION_URL")
 CALLBACK_URL = os.environ.get("CALLBACK_URL")
 subscription_created = False
 

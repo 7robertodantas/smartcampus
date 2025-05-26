@@ -1,12 +1,10 @@
 import logging
 import os
 import json
-import requests
 import fiware
 from datetime import datetime, timedelta, timezone
 import time
 
-# Logging configuration
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()
@@ -15,7 +13,6 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 logger.propagate = False
 
-ORION_URL = os.environ.get("ORION_URL")
 ENTITY_TYPE = "CourseInstance"
 ENTITIES_DIR = os.environ.get("ENTITIES_DIR")
 
@@ -38,8 +35,6 @@ def update_course_schedule():
 
     logger.info(f"Updating schedule for course {course_id}...")
 
-    update_url = f"{ORION_URL}/v2/entities/{course_id}/attrs/classSchedule"
-
     now = datetime.now(timezone.utc)
     new_day = now.strftime("%A")
     new_start = (now + timedelta(hours=1, minutes=30)).strftime("%H:%M")
@@ -50,19 +45,17 @@ def update_course_schedule():
     logger.info(f"End time: {new_end}")
 
     new_schedule = {
-        "value": [{"day": new_day, "startTime": new_start, "endTime": new_end}],
-        "type": "StructuredValue",
+        "classSchedule": {
+            "value": [{"day": new_day, "startTime": new_start, "endTime": new_end}],
+            "type": "StructuredValue",
+        }
     }
 
     try:
-        response = requests.put(update_url, headers=headers, json=new_schedule)
-        if response.status_code in [204, 201]:
-            logger.info(f"[OK] Schedule for course {course_id} updated successfully.")
-        else:
-            logger.error(f"[ERROR] Failed to update schedule: {response.status_code}")
-            logger.debug(response.text)
+        fiware.update_entity(course_id, new_schedule)
+        logger.info(f"Schedule for course {course_id} updated successfully.")
     except Exception as e:
-        logger.error(f"Error updating schedule: {e}")
+        logger.error(f"Failed to update schedule for course {course_id}.")
 
 
 def main():

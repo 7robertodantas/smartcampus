@@ -50,17 +50,7 @@ def upsert_weather_station(weathercode, timestamp):
         },
     }
 
-    url = f"{ORION_URL}/v2/entities/{ENTITY_ID}/attrs"
-    try:
-        res = requests.post(url, headers=HEADERS, json=attrs)
-        if res.status_code in [204, 201]:
-            logger.info(
-                f"[{timestamp}] Updated: {ENTITY_ID} with weathercode {weathercode}"
-            )
-        else:
-            logger.error(f"{res.status_code} - {res.text}")
-    except Exception as e:
-        logger.exception(f"Error updating entity: {e}")
+    fiware.update_entity(ENTITY_ID, attrs)
 
 
 def simulate_weather_loop():
