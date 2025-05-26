@@ -1,10 +1,8 @@
-import time
 import logging
 import sys
 import json
 import os
 import requests
-from requests.exceptions import ConnectionError, HTTPError, Timeout, RequestException
 from flask import Flask, request
 import fiware
 

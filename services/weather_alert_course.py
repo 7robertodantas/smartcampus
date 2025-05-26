@@ -6,7 +6,6 @@ import requests
 from datetime import datetime, timedelta, timezone
 from flask import Flask, request
 import fiware
-import time
 import unicodedata
 
 
@@ -249,19 +248,3 @@ def register_subscription():
         logger.info("Inscrição criada com sucesso.")
     else:
         logger.error("Falha ao criar inscrição.")
-
-
-def esperar_orion_disponivel(max_tentativas=100, intervalo=5):
-    logger.info("Verificando disponibilidade do Orion...")
-    url_teste = "http://orion:1026/version"
-    for tentativa in range(max_tentativas):
-        try:
-            resposta = requests.get(url_teste)
-            if resposta.status_code == 200:
-                logger.info(f"Orion respondeu na tentativa {tentativa + 1}")
-                return
-        except requests.exceptions.RequestException as e:
-            logger.info(f"Orion ainda não está pronto: {e}")
-        time.sleep(intervalo)
-    logger.error("Orion não respondeu a tempo.")
-    sys.exit(1)
