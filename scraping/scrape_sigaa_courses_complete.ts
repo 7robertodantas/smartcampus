@@ -1,39 +1,60 @@
+import "dotenv/config";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-import { chromium } from "playwright"; // or 'firefox' or 'webkit'
+import { chromium, Page } from "playwright"; // or 'firefox' or 'webkit'
+import {
+  expandFiwareSchedule,
+  expandFiwareClassPeriod,
+} from "./sigaa_parser_schedule";
 
-type ClassScheduleEntry = {
-  day: string;
-  startTime: string;
-  endTime: string;
+type AcademicUnit = {
+  shortName: string;
+  location: {
+    type: string;
+    value: { coordinates: [number, number]; type: string };
+  };
 };
 
-const scheduleTimes: Record<string, { start: string; end: string }> = {
-  M1: { start: "07:00", end: "07:50" },
-  M2: { start: "07:50", end: "08:40" },
-  M3: { start: "08:55", end: "09:45" },
-  M4: { start: "09:45", end: "10:35" },
-  M5: { start: "10:50", end: "11:40" },
-  M6: { start: "11:40", end: "12:30" },
-  T1: { start: "13:00", end: "13:50" },
-  T2: { start: "13:50", end: "14:40" },
-  T3: { start: "14:55", end: "15:45" },
-  T4: { start: "15:45", end: "16:35" },
-  T5: { start: "16:50", end: "17:40" },
-  T6: { start: "17:40", end: "18:30" },
-  N1: { start: "18:45", end: "19:35" },
-  N2: { start: "19:35", end: "20:25" },
-  N3: { start: "20:35", end: "21:25" },
-  N4: { start: "21:25", end: "22:15" },
-};
-
-const dayMap: Record<string, string> = {
-  1: "Sunday",
-  2: "Monday",
-  3: "Tuesday",
-  4: "Wednesday",
-  5: "Thursday",
-  6: "Friday",
-  7: "Saturday",
+const academicUnits: Record<string, AcademicUnit> = {
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM ADMINISTRAÇÃO": {
+    shortName: "PPGA",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.19753457434268, -5.838500531710352],
+        type: "Point",
+      },
+    },
+  },
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM TECNOLOGIA DA INFORMAÇÃO": {
+    shortName: "PPGTI",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.20545452790071, -5.832295943261201],
+        type: "Point",
+      },
+    },
+  },
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO": {
+    shortName: "PPGCTI",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.1993544215201, -5.841514491832527],
+        type: "Point",
+      },
+    },
+  },
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA APLICADA E ESTATÍSTICA": {
+    shortName: "PPGMAE",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.20039259969485, -5.8411645284666065],
+        type: "Point",
+      },
+    },
+  },
 };
 
 function mapToFiwareEntity(course: any) {
@@ -63,96 +84,14 @@ function mapToFiwareEntity(course: any) {
   };
 }
 
-function expandFiwareClassPeriod(schedule: string) {
-  const match = schedule.match(/\(([^)]+)\)/);
-  if (!match) {
-    return {
-      classPeriod: {
-        type: "StructuredValue",
-        value: [],
-      },
-    };
-  }
-  const [_, dateRangeStr] = match;
-  const [startStr, endStr] = dateRangeStr.split("-").map((s) => s.trim());
-  const parseDate = (str: string) => {
-    const [day, month, year] = str.split("/").map(Number);
-    const date = new Date(year, month - 1, day);
-    return date.toISOString().slice(0, 10); // "YYYY-MM-DD"
-  };
-  if (!startStr || !endStr) {
-    return {
-      classPeriod: {
-        type: "StructuredValue",
-        value: [],
-      },
-    };
-  }
-  return {
-    classPeriod: {
-      type: "StructuredValue",
-      value: [
-        {
-          startDate: parseDate(startStr),
-          endDate: parseDate(endStr),
-        },
-      ],
-    },
-  };
-}
-
-function expandFiwareSchedule(schedule: string) {
-  if (!schedule) {
-    return {
-      classSchedule: {
-        type: "StructuredValue",
-        value: [],
-      },
-    };
-  }
-  const result: ClassScheduleEntry[] = [];
-  // Remove date range if present
-  const schedulePart = schedule.replace(/\(.*?\)/g, "").trim();
-  // Split by spaces, filter out empty
-  const blocks = schedulePart.split(/\s+/).filter(Boolean);
-
-  for (const block of blocks) {
-    // Match patterns like 7M2345 (day, period, times)
-    const match = block.match(/^(\d)([MTN])([1-6]+)$/i);
-    if (match) {
-      const [, dayDigit, period, times] = match;
-      // Group consecutive time digits
-      const timeDigits = times.split("");
-      const first = timeDigits[0];
-      const last = timeDigits[timeDigits.length - 1];
-      const keyStart = `${period.toUpperCase()}${first}`;
-      const keyEnd = `${period.toUpperCase()}${last}`;
-      if (scheduleTimes[keyStart] && scheduleTimes[keyEnd]) {
-        result.push({
-          day: dayMap[dayDigit] || "Unknown",
-          startTime: scheduleTimes[keyStart].start,
-          endTime: scheduleTimes[keyEnd].end,
-        });
-      }
-    }
-  }
-
-  return {
-    classSchedule: {
-      type: "StructuredValue",
-      value: result,
-    },
-  };
-}
-
 (async () => {
   if (
-    !process.env.USERNAME ||
-    !process.env.PASSWORD ||
-    !process.env.MATRICULA
+    !process.env.SIGAA_USERNAME ||
+    !process.env.SIGAA_PASSWORD ||
+    !process.env.SIGAA_MATRICULA
   ) {
     throw new Error(
-      "Missing required environment variables: USERNAME, PASSWORD, or MATRICULA"
+      "Missing required environment variables: SIGAA_USERNAME, SIGAA_PASSWORD, or SIGAA_MATRICULA"
     );
   }
 
@@ -164,13 +103,13 @@ function expandFiwareSchedule(schedule: string) {
   await page.goto("https://sigaa.ufrn.br/sigaa/");
 
   // Fill the username input
-  const username = process.env.USERNAME || "";
+  const username = process.env.SIGAA_USERNAME || "";
   await page.fill('input[name="username"]', username);
 
-  const password = process.env.PASSWORD || "";
+  const password = process.env.SIGAA_PASSWORD || "";
   await page.fill('input[name="password"]', password);
 
-  const matricula = process.env.MATRICULA || "";
+  const matricula = process.env.SIGAA_MATRICULA || "";
 
   await page.getByRole("button", { name: "Entrar" }).click();
 
@@ -221,19 +160,33 @@ function expandFiwareSchedule(schedule: string) {
   // Wait for the checkbox to be visible
   await page.waitForSelector("input#form\\:checkUnidade", { state: "visible" });
 
-  // Select the option containing "TECNOLOGIA DA INFORMAÇÃO"
+  for (const academicUnit of Object.keys(academicUnits)) {
+    await scrapeAcademicUnit(academicUnit, page);
+  }
+
+  await browser.close();
+})();
+
+async function scrapeAcademicUnit(academicUnitName: string, page: Page) {
+  const academicUnit = academicUnits[academicUnitName];
+
+  console.log(`Scraping academic unit: ${academicUnitName}`);
+
   const unidadeValue = await page.$eval(
     "select#form\\:selectUnidade",
-    (select) => {
+    (select, academicUnitName) => {
       const options = Array.from((select as HTMLSelectElement).options);
       const target = options.find((o) =>
-        o.textContent?.includes("TECNOLOGIA DA INFORMAÇÃO")
+        o.textContent?.includes(academicUnitName)
       );
+      console.log(`Selected option: ${target?.textContent}`);
       // Save the textContent to a variable in the browser context
       (window as any).__unidadeOptionText = target?.textContent || "";
       return target?.value || "";
-    }
+    },
+    academicUnitName // Pass as argument to the page function
   );
+
   await page.selectOption("select#form\\:selectUnidade", unidadeValue);
 
   // Click the checkbox
@@ -248,6 +201,7 @@ function expandFiwareSchedule(schedule: string) {
     ...mapToFiwareEntity(course),
     ...expandFiwareSchedule(course.scheduleText),
     ...expandFiwareClassPeriod(course.scheduleText),
+    location: academicUnit.location,
   }));
 
   const outputDir = "outputs";
@@ -259,17 +213,13 @@ function expandFiwareSchedule(schedule: string) {
       .replace(/\./g, "-")
       .replace(/\s+/g, "-")
       .toLowerCase();
-    const filename = `${outputDir}/course-instance-ufrn-${course.courseCode.value}-${periodFilename}.json`;
+    const filename = `${outputDir}/course-instance-ufrn-${academicUnit.shortName}-${course.courseCode.value}-${periodFilename}.json`;
     // This will overwrite the file if it already exists
     writeFileSync(filename, JSON.stringify(course, null, 2), "utf-8");
   }
 
-  console.log(JSON.stringify(finalCourses, null, 2));
-
-  await page.pause();
-
-  await browser.close();
-})();
+  console.log(JSON.stringify(finalCourses));
+}
 
 function scrapeCourseDetails() {
   return () => {
