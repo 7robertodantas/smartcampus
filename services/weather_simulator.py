@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 import random
 import fiware
 
-# Configuração de logging
+# Logging configuration
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler()
@@ -55,19 +55,19 @@ def upsert_weather_station(weathercode, timestamp):
         res = requests.post(url, headers=HEADERS, json=attrs)
         if res.status_code in [204, 201]:
             logger.info(
-                f"[{timestamp}] Atualizado: {ENTITY_ID} com weathercode {weathercode}"
+                f"[{timestamp}] Updated: {ENTITY_ID} with weathercode {weathercode}"
             )
         else:
             logger.error(f"{res.status_code} - {res.text}")
     except Exception as e:
-        logger.exception(f"Erro ao atualizar entidade: {e}")
+        logger.exception(f"Error updating entity: {e}")
 
 
 def simulate_weather_loop():
-    logger.info("Simulando atualizações de clima...")
+    logger.info("Simulating weather updates...")
 
-    chuva_codes = [61, 80]
-    sol_codes = [0, 1]
+    rain_codes = [61, 80]
+    sun_codes = [0, 1]
 
     i = 1
     while True:
@@ -75,9 +75,9 @@ def simulate_weather_loop():
         timestamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
 
         if i % 2 == 0:
-            weathercode = random.choice(chuva_codes)
+            weathercode = random.choice(rain_codes)
         else:
-            weathercode = random.choice(sol_codes)
+            weathercode = random.choice(sun_codes)
 
         upsert_weather_station(weathercode, timestamp)
         time.sleep(random.randint(5, 10))

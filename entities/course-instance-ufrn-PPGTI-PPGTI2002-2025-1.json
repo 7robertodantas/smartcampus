@@ -1,0 +1,124 @@
+{
+  "id": "CourseInstance:UFRN:PPGTI2002:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM TECNOLOGIA DA INFORMAÇÃO - NATAL - 11.00.05.02.03.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "PPGTI2002"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "DESENVOLVIMENTO DE APLICAÇÕES PARA INTERNET DAS COISAS"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57760367"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "7T12345  6N1234 06062025 - 28062025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "A309"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 39
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 40
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "17:40",
+        "startPeriod": "2025-06-06",
+        "endPeriod": "2025-06-28"
+      },
+      {
+        "day": "Friday",
+        "startTime": "18:45",
+        "endTime": "22:15",
+        "startPeriod": "2025-06-06",
+        "endPeriod": "2025-06-28"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-06-06",
+        "endDate": "2025-06-28"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "ALUÍZIO FERREIRA DA ROCHA NETO"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 30,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.20545452790071,
+        -5.832295943261201
+      ],
+      "type": "Point"
+    }
+  }
+}

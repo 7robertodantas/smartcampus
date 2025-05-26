@@ -1,0 +1,208 @@
+{
+  "id": "CourseInstance:UFRN:CTI0501:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO - NATAL - 11.25.00.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "CTI0501"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "TÓPICOS AVANÇADOS EM GESTÃO DA INOVAÇÃO E DA INFORMAÇÃO"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57759919"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "7T123456 15032025 - 15032025,  7T123456 29032025 - 29032025,  7T123456 12042025 - 12042025,  7T123456 26042025 - 26042025,  7T123456 10052025 - 10052025,  7T123456 24052025 - 24052025,  7T123456 07062025 - 07062025,  7T123456 14062025 - 14062025,  7T123456 28062025 - 28062025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "ECT"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 20
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 20
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-03-15",
+        "endPeriod": "2025-03-15"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-03-29",
+        "endPeriod": "2025-03-29"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-04-12",
+        "endPeriod": "2025-04-12"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-04-26",
+        "endPeriod": "2025-04-26"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-05-10",
+        "endPeriod": "2025-05-10"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-05-24",
+        "endPeriod": "2025-05-24"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-06-07",
+        "endPeriod": "2025-06-07"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-06-14",
+        "endPeriod": "2025-06-14"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "18:30",
+        "startPeriod": "2025-06-28",
+        "endPeriod": "2025-06-28"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-03-15",
+        "endDate": "2025-03-15"
+      },
+      {
+        "startDate": "2025-03-29",
+        "endDate": "2025-03-29"
+      },
+      {
+        "startDate": "2025-04-12",
+        "endDate": "2025-04-12"
+      },
+      {
+        "startDate": "2025-04-26",
+        "endDate": "2025-04-26"
+      },
+      {
+        "startDate": "2025-05-10",
+        "endDate": "2025-05-10"
+      },
+      {
+        "startDate": "2025-05-24",
+        "endDate": "2025-05-24"
+      },
+      {
+        "startDate": "2025-06-07",
+        "endDate": "2025-06-07"
+      },
+      {
+        "startDate": "2025-06-14",
+        "endDate": "2025-06-14"
+      },
+      {
+        "startDate": "2025-06-28",
+        "endDate": "2025-06-28"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "EFRAIN PANTALEON MATAMOROS"
+      },
+      {
+        "name": "MARCO BRUNO MIRANDA CLEMENTINO"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 20,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.1993544215201,
+        -5.841514491832527
+      ],
+      "type": "Point"
+    }
+  }
+}

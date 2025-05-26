@@ -40,29 +40,44 @@ def create_entity(entity):
         return False
 
 
-def delete_all_entities():
+def delete_all_entities(type):
     try:
-        url = f"{ORION_URL}/v2/entities"
         headers = {"Accept": "application/json"}
-        res = requests.get(url, headers=headers)
-        res.raise_for_status()
-        entities = res.json()
-        for entity in entities:
-            entity_id = entity.get("id")
-            if entity_id:
-                del_url = f"{ORION_URL}/v2/entities/{entity_id}"
-                try:
-                    del_res = requests.delete(del_url, headers=headers)
-                    if del_res.status_code in [204, 404]:
-                        logger.info(f"Deleted entity {entity_id}")
-                    else:
-                        logger.warning(
-                            f"Failed to delete entity {entity_id}: {del_res.status_code}"
+        limit = 100
+
+        while True:
+            params = {
+                "type": type,
+                "limit": limit,
+                "offset": 0,
+                "options": "count",
+            }
+            url = f"{ORION_URL}/v2/entities"
+            res = requests.get(url, params=params, headers=headers)
+            res.raise_for_status()
+            total = int(res.headers.get("Fiware-Total-Count", 0))
+            logger.info(f"Found entities of type {type}: {total}")
+            if total == 0:
+                logger.info(f"No entities of type {type} to delete.")
+                break
+
+            entities = res.json()
+            for entity in entities:
+                entity_id = entity.get("id")
+                if entity_id:
+                    del_url = f"{ORION_URL}/v2/entities/{entity_id}"
+                    try:
+                        del_res = requests.delete(del_url, headers=headers)
+                        if del_res.status_code in [204, 404]:
+                            logger.info(f"Deleted entity {entity_id}")
+                        else:
+                            logger.warning(
+                                f"Failed to delete entity {entity_id}: {del_res.status_code}"
+                            )
+                    except Exception as e:
+                        logger.error(
+                            f"Error deleting entity {entity_id}: {e}", exc_info=True
                         )
-                except Exception as e:
-                    logger.error(
-                        f"Error deleting entity {entity_id}: {e}", exc_info=True
-                    )
     except Exception as e:
         logger.error(f"Error retrieving entities: {e}", exc_info=True)
 

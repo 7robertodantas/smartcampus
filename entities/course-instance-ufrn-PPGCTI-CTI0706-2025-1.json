@@ -1,0 +1,160 @@
+{
+  "id": "CourseInstance:UFRN:CTI0706:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO - NATAL - 11.25.00.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "CTI0706"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "TÓPICOS AVANÇADOS EM PRÁTICAS CIENTÍFICO-EMPREENDEDORAS VI"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57759894"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 02"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "7M23456  7T1 05072025 - 05072025, 7M23456  7T1 12072025 - 12072025, 7M23456  7T1 26072025 - 26072025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "ECT"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 20
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 20
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Saturday",
+        "startTime": "07:50",
+        "endTime": "12:30",
+        "startPeriod": "2025-07-05",
+        "endPeriod": "2025-07-05"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "13:50",
+        "startPeriod": "2025-07-05",
+        "endPeriod": "2025-07-05"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "07:50",
+        "endTime": "12:30",
+        "startPeriod": "2025-07-12",
+        "endPeriod": "2025-07-12"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "13:50",
+        "startPeriod": "2025-07-12",
+        "endPeriod": "2025-07-12"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "07:50",
+        "endTime": "12:30",
+        "startPeriod": "2025-07-26",
+        "endPeriod": "2025-07-26"
+      },
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "13:50",
+        "startPeriod": "2025-07-26",
+        "endPeriod": "2025-07-26"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-07-05",
+        "endDate": "2025-07-05"
+      },
+      {
+        "startDate": "2025-07-12",
+        "endDate": "2025-07-12"
+      },
+      {
+        "startDate": "2025-07-26",
+        "endDate": "2025-07-26"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "EDGARD DE FARIA CORREA"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 15,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.1993544215201,
+        -5.841514491832527
+      ],
+      "type": "Point"
+    }
+  }
+}

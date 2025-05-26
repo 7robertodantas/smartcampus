@@ -1,0 +1,124 @@
+{
+  "id": "CourseInstance:UFRN:PPGTI3102:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM TECNOLOGIA DA INFORMAÇÃO - NATAL - 11.00.05.02.03.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "PPGTI3102"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "TÓPICOS AVANÇADOS EM INTELIGÊNCIA COMPUTACIONAL 3"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57760362"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "7T1234  6N1234 04042025 - 03052025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "A304"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 17
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 30
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Saturday",
+        "startTime": "13:00",
+        "endTime": "16:35",
+        "startPeriod": "2025-04-04",
+        "endPeriod": "2025-05-03"
+      },
+      {
+        "day": "Friday",
+        "startTime": "18:45",
+        "endTime": "22:15",
+        "startPeriod": "2025-04-04",
+        "endPeriod": "2025-05-03"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-04-04",
+        "endDate": "2025-05-03"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "ELIAS JACOB DE MENEZES NETO"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 30,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.20545452790071,
+        -5.832295943261201
+      ],
+      "type": "Point"
+    }
+  }
+}

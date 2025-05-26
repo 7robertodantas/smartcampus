@@ -1,0 +1,117 @@
+{
+  "id": "CourseInstance:UFRN:CTI0201:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO - NATAL - 11.25.00.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "CTI0201"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "DIFUSÃO E DIVULGAÇÃO DA CIÊNCIA, TECNOLOGIA E INOVAÇÃO"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57759803"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "4N1234 17032025 - 21062025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "SETOR IV - BLOCO I - SALA 17"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 18
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 20
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Wednesday",
+        "startTime": "18:45",
+        "endTime": "22:15",
+        "startPeriod": "2025-03-17",
+        "endPeriod": "2025-06-21"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-03-17",
+        "endDate": "2025-06-21"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "ZULMARA VIRGINIA DE CARVALHO"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 45,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.1993544215201,
+        -5.841514491832527
+      ],
+      "type": "Point"
+    }
+  }
+}

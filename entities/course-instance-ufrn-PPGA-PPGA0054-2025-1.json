@@ -1,0 +1,119 @@
+{
+  "id": "CourseInstance:UFRN:PPGA0054:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM ADMINISTRAÇÃO - NATAL - 16.21"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "PPGA0054"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "PYTHON PARA FINANÇAS"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57760126"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "46N12"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "Setor V, D2"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 4
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 50
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Wednesday",
+        "startTime": "18:45",
+        "endTime": "20:25",
+        "startPeriod": "",
+        "endPeriod": ""
+      },
+      {
+        "day": "Friday",
+        "startTime": "18:45",
+        "endTime": "20:25",
+        "startPeriod": "",
+        "endPeriod": ""
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": []
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "VINICIO DE SOUZA E ALMEIDA"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 60,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.19753457434268,
+        -5.838500531710352
+      ],
+      "type": "Point"
+    }
+  }
+}

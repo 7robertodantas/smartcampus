@@ -1,0 +1,117 @@
+{
+  "id": "CourseInstance:UFRN:CTI0701:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO - NATAL - 11.25.00.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "CTI0701"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "TÓPICOS AVANÇADOS EM PRÁTICAS CIENTÍFICO-EMPREENDEDORAS I"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57759917"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 03"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "5N1234 24042025 - 22052025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "SETOR IV - BLOCO I - SALA 17"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 13
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 20
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Thursday",
+        "startTime": "18:45",
+        "endTime": "22:15",
+        "startPeriod": "2025-04-24",
+        "endPeriod": "2025-05-22"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-04-24",
+        "endDate": "2025-05-22"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "EDGARD DE FARIA CORREA"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 15,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.1993544215201,
+        -5.841514491832527
+      ],
+      "type": "Point"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "id": "CourseInstance:UFRN:PPGTI3007:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM TECNOLOGIA DA INFORMAÇÃO - NATAL - 11.00.05.02.03.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "PPGTI3007"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "VISÃO COMPUTACIONAL"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57760361"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "7M2345  6T2345 04042025 - 03052025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "A309"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 39
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 40
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Saturday",
+        "startTime": "07:50",
+        "endTime": "11:40",
+        "startPeriod": "2025-04-04",
+        "endPeriod": "2025-05-03"
+      },
+      {
+        "day": "Friday",
+        "startTime": "13:50",
+        "endTime": "17:40",
+        "startPeriod": "2025-04-04",
+        "endPeriod": "2025-05-03"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-04-04",
+        "endDate": "2025-05-03"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "HELTON MAIA PEIXOTO"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 30,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.20545452790071,
+        -5.832295943261201
+      ],
+      "type": "Point"
+    }
+  }
+}

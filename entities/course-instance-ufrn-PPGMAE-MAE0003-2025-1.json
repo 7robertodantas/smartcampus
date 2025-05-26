@@ -1,0 +1,119 @@
+{
+  "id": "CourseInstance:UFRN:MAE0003:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA APLICADA E ESTATÍSTICA - NATAL - 12.51"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "MAE0003"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "INFERÊNCIA"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57757308"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "2T45 4T345"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "Sala 3H3"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 2
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 20
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Monday",
+        "startTime": "15:45",
+        "endTime": "17:40",
+        "startPeriod": "",
+        "endPeriod": ""
+      },
+      {
+        "day": "Wednesday",
+        "startTime": "14:55",
+        "endTime": "17:40",
+        "startPeriod": "",
+        "endPeriod": ""
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": []
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "ELIARDO GUIMARAES DA COSTA"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 75,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.20039259969485,
+        -5.8411645284666065
+      ],
+      "type": "Point"
+    }
+  }
+}

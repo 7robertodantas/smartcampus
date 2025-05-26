@@ -1,0 +1,117 @@
+{
+  "id": "CourseInstance:UFRN:PPGA0133:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM ADMINISTRAÇÃO - NATAL - 16.21"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "PPGA0133"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "MÉTODOS QUALITATIVOS II"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57760121"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "6T2345 17032025 - 26072025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "Setor V, sala D2"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 17
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 50
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Friday",
+        "startTime": "13:50",
+        "endTime": "17:40",
+        "startPeriod": "2025-03-17",
+        "endPeriod": "2025-07-26"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-03-17",
+        "endDate": "2025-07-26"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "ANATALIA SARAIVA MARTINS RAMOS"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 60,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.19753457434268,
+        -5.838500531710352
+      ],
+      "type": "Point"
+    }
+  }
+}

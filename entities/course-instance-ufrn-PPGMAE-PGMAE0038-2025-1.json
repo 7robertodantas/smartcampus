@@ -1,0 +1,119 @@
+{
+  "id": "CourseInstance:UFRN:PGMAE0038:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA APLICADA E ESTATÍSTICA - NATAL - 12.51"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "PGMAE0038"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "DOCÊNCIA NO ENSINO SUPERIOR"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57757311"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "35T34"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "Sala 3H3"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 5
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 5
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Tuesday",
+        "startTime": "14:55",
+        "endTime": "16:35",
+        "startPeriod": "",
+        "endPeriod": ""
+      },
+      {
+        "day": "Thursday",
+        "startTime": "14:55",
+        "endTime": "16:35",
+        "startPeriod": "",
+        "endPeriod": ""
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": []
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "FIDEL ERNESTO CASTRO MORALES"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 60,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.20039259969485,
+        -5.8411645284666065
+      ],
+      "type": "Point"
+    }
+  }
+}

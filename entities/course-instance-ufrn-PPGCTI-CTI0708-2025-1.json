@@ -1,0 +1,117 @@
+{
+  "id": "CourseInstance:UFRN:CTI0708:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO - NATAL - 11.25.00.06"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "CTI0708"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "TÓPICOS AVANÇADOS EM PRÁTICAS CIENTÍFICO-EMPREENDEDORAS VIII"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57759794"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "3M3456 22062025 - 25072025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "SETOR IV - BLOCO I - SALA 17"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 13
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 20
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Tuesday",
+        "startTime": "08:55",
+        "endTime": "12:30",
+        "startPeriod": "2025-06-22",
+        "endPeriod": "2025-07-25"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-06-22",
+        "endDate": "2025-07-25"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "DIEGO RODRIGO CABRAL SILVA"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 15,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.1993544215201,
+        -5.841514491832527
+      ],
+      "type": "Point"
+    }
+  }
+}

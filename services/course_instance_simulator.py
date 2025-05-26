@@ -1,11 +1,22 @@
+import logging
 import os
 import json
 import requests
 import fiware
 from datetime import datetime, timedelta, timezone
+import time
 
-# === Configuration ===
+# Logging configuration
+logger = logging.getLogger()
+logger.setLevel(logging.DEBUG)
+handler = logging.StreamHandler()
+formatter = logging.Formatter("[%(levelname)s] %(asctime)s - %(message)s")
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.propagate = False
+
 ORION_URL = os.environ.get("ORION_URL")
+ENTITY_TYPE = "CourseInstance"
 ENTITIES_DIR = os.environ.get("ENTITIES_DIR")
 
 headers = {"Content-Type": "application/json", "Accept": "application/json"}
@@ -19,13 +30,13 @@ def create_entity_from_file(filepath):
             entity = json.load(file)
             fiware.create_entity(entity)
     except Exception as e:
-        print(f"[EXCEPTION] Error processing {filepath}: {e}")
+        logger.error(f"Error processing {filepath}: {e}")
 
 
 def update_course_schedule():
-    course_id = "CourseInstance:PPGTI3001-2025"  # Change to your course ID
+    course_id = "CourseInstance:UFRN:PPGTI3004:2025.1"  # Change to your course ID
 
-    print(f"[INFO] Updating schedule for course {course_id}...")
+    logger.info(f"Updating schedule for course {course_id}...")
 
     update_url = f"{ORION_URL}/v2/entities/{course_id}/attrs/classSchedule"
 
@@ -34,9 +45,9 @@ def update_course_schedule():
     new_start = (now + timedelta(hours=1, minutes=30)).strftime("%H:%M")
     new_end = (now + timedelta(hours=2, minutes=30)).strftime("%H:%M")
 
-    print(f"[INFO] New day: {new_day}")
-    print(f"[INFO] Start time: {new_start}")
-    print(f"[INFO] End time: {new_end}")
+    logger.info(f"New day: {new_day}")
+    logger.info(f"Start time: {new_start}")
+    logger.info(f"End time: {new_end}")
 
     new_schedule = {
         "value": [{"day": new_day, "startTime": new_start, "endTime": new_end}],
@@ -46,20 +57,23 @@ def update_course_schedule():
     try:
         response = requests.put(update_url, headers=headers, json=new_schedule)
         if response.status_code in [204, 201]:
-            print(f"[OK] Schedule for course {course_id} updated successfully.")
+            logger.info(f"[OK] Schedule for course {course_id} updated successfully.")
         else:
-            print(f"[ERROR] Failed to update schedule: {response.status_code}")
-            print(response.text)
+            logger.error(f"[ERROR] Failed to update schedule: {response.status_code}")
+            logger.debug(response.text)
     except Exception as e:
-        print(f"[EXCEPTION] Error updating schedule: {e}")
+        logger.error(f"Error updating schedule: {e}")
 
 
 def main():
     if not os.path.isdir(ENTITIES_DIR):
-        print(f"[ERROR] Folder '{ENTITIES_DIR}' not found.")
+        logger.error(f"Folder '{ENTITIES_DIR}' not found.")
         return
 
-    fiware.delete_all_entities()
+    fiware.delete_all_entities(ENTITY_TYPE)
+
+    logger.info("Waiting for 1 second before creating entities...")
+    time.sleep(1)
 
     for filename in os.listdir(ENTITIES_DIR):
         if filename.endswith(".json"):
@@ -67,7 +81,7 @@ def main():
             create_entity_from_file(filepath)
 
     update_course_schedule()
-    print("[INFO] All entities created and updated successfully.")
+    logger.info("All entities created and updated successfully.")
 
 
 if __name__ == "__main__":

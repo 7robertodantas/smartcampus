@@ -1,0 +1,124 @@
+{
+  "id": "CourseInstance:UFRN:PPGA0050:2025.1",
+  "type": "CourseInstance",
+  "refOrganization": {
+    "value": "Organization-UFRN",
+    "type": "Relationship"
+  },
+  "academicUnit": {
+    "type": "Text",
+    "value": "PROGRAMA DE PÓS-GRADUAÇÃO EM ADMINISTRAÇÃO - NATAL - 16.21"
+  },
+  "courseCode": {
+    "type": "Text",
+    "value": "PPGA0050"
+  },
+  "courseName": {
+    "type": "Text",
+    "value": "OFICINA DE MÉTODOS QUANTITATIVOS APLICADOS ÀS CIÊNCIAS SOCIAIS"
+  },
+  "courseLevel": {
+    "type": "Text",
+    "value": "PÓS-GRADUAÇÃO"
+  },
+  "turmaId": {
+    "type": "Text",
+    "value": "57760130"
+  },
+  "period": {
+    "type": "Text",
+    "value": "2025.1"
+  },
+  "classGroup": {
+    "type": "Text",
+    "value": "Turma 01"
+  },
+  "courseType": {
+    "type": "Text",
+    "value": "REGULAR"
+  },
+  "modality": {
+    "type": "Text",
+    "value": "Presencial"
+  },
+  "status": {
+    "type": "Text",
+    "value": "ABERTA"
+  },
+  "scheduleText": {
+    "type": "Text",
+    "value": "25M34 17032025 - 26072025"
+  },
+  "locationText": {
+    "type": "Text",
+    "value": "Setor V, D2/D3"
+  },
+  "content": {
+    "type": "Text",
+    "value": ""
+  },
+  "enrollments": {
+    "type": "Number",
+    "value": 8
+  },
+  "capacity": {
+    "type": "Number",
+    "value": 50
+  },
+  "classSchedule": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "day": "Monday",
+        "startTime": "08:55",
+        "endTime": "10:35",
+        "startPeriod": "2025-03-17",
+        "endPeriod": "2025-07-26"
+      },
+      {
+        "day": "Thursday",
+        "startTime": "08:55",
+        "endTime": "10:35",
+        "startPeriod": "2025-03-17",
+        "endPeriod": "2025-07-26"
+      }
+    ]
+  },
+  "classPeriod": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "startDate": "2025-03-17",
+        "endDate": "2025-07-26"
+      }
+    ]
+  },
+  "instructors": {
+    "type": "StructuredValue",
+    "value": [
+      {
+        "name": "RAQUEL MENEZES BEZERRA SAMPAIO"
+      }
+    ]
+  },
+  "workload": {
+    "type": "Number",
+    "value": 60,
+    "metadata": {
+      "unitCode": {
+        "type": "Text",
+        "value": "HUR"
+      }
+    }
+  },
+  "location": {
+    "type": "geo:json",
+    "value": {
+      "coordinates": [
+        -35.19753457434268,
+        -5.838500531710352
+      ],
+      "type": "Point"
+    }
+  }
+}
