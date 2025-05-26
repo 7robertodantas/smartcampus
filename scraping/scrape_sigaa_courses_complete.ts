@@ -2,62 +2,20 @@ import "dotenv/config";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { chromium, Page } from "playwright"; // or 'firefox' or 'webkit'
 import {
-  expandFiwareSchedule,
+  academicUnits,
   expandFiwareClassPeriod,
-} from "./sigaa_parser_schedule";
-
-type AcademicUnit = {
-  shortName: string;
-  location: {
-    type: string;
-    value: { coordinates: [number, number]; type: string };
-  };
-};
-
-const academicUnits: Record<string, AcademicUnit> = {
-  "PROGRAMA DE PÓS-GRADUAÇÃO EM ADMINISTRAÇÃO": {
-    shortName: "PPGA",
-    location: {
-      type: "geo:json",
-      value: {
-        coordinates: [-35.19753457434268, -5.838500531710352],
-        type: "Point",
-      },
-    },
-  },
-  "PROGRAMA DE PÓS-GRADUAÇÃO EM TECNOLOGIA DA INFORMAÇÃO": {
-    shortName: "PPGTI",
-    location: {
-      type: "geo:json",
-      value: {
-        coordinates: [-35.20545452790071, -5.832295943261201],
-        type: "Point",
-      },
-    },
-  },
-  "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO": {
-    shortName: "PPGCTI",
-    location: {
-      type: "geo:json",
-      value: {
-        coordinates: [-35.1993544215201, -5.841514491832527],
-        type: "Point",
-      },
-    },
-  },
-  "PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA APLICADA E ESTATÍSTICA": {
-    shortName: "PPGMAE",
-    location: {
-      type: "geo:json",
-      value: {
-        coordinates: [-35.20039259969485, -5.8411645284666065],
-        type: "Point",
-      },
-    },
-  },
-};
+  expandFiwareSchedule,
+  expandFiwareWorkload,
+  expandInstructorsFiware,
+  parseWorkload,
+} from "./sigaa_parser";
 
 function mapToFiwareEntity(course: any) {
+  // Remove special characters from scheduleText (keep only letters, numbers, spaces, and common punctuation)
+  const cleanedScheduleText = course.scheduleText
+    ? course.scheduleText.replace(/[^\w\s.,:;-]/g, "")
+    : "";
+
   return {
     id: `CourseInstance:UFRN:${course.courseCode}:${course.period}`,
     type: "CourseInstance",
@@ -72,11 +30,10 @@ function mapToFiwareEntity(course: any) {
     turmaId: { type: "Text", value: course.turmaId },
     period: { type: "Text", value: course.period },
     classGroup: { type: "Text", value: course.classGroup },
-    instructor: { type: "Text", value: course.instructor },
     courseType: { type: "Text", value: course.type },
     modality: { type: "Text", value: course.modality },
     status: { type: "Text", value: course.status },
-    scheduleText: { type: "Text", value: course.scheduleText },
+    scheduleText: { type: "Text", value: cleanedScheduleText },
     locationText: { type: "Text", value: course.location },
     content: { type: "Text", value: course.content },
     enrollments: { type: "Number", value: course.enrollments },
@@ -201,6 +158,8 @@ async function scrapeAcademicUnit(academicUnitName: string, page: Page) {
     ...mapToFiwareEntity(course),
     ...expandFiwareSchedule(course.scheduleText),
     ...expandFiwareClassPeriod(course.scheduleText),
+    ...expandInstructorsFiware(course.instructor),
+    ...expandFiwareWorkload(parseWorkload(course.instructor)),
     location: academicUnit.location,
   }));
 
@@ -269,6 +228,9 @@ function scrapeCourseDetails() {
           }
           // Extract enrollment/capacity
           const matCap = cells[9].textContent?.trim().match(/(\d+)\/(\d+)/);
+          // Parse instructor and workload from instructor field
+          let instructorRaw = cells[2].textContent?.trim() || "";
+
           result.push({
             academicUnit: unidadeName,
             courseCode: currentCourse.code,
@@ -277,7 +239,7 @@ function scrapeCourseDetails() {
             turmaId,
             period: cells[0].textContent?.trim(),
             classGroup: turmaLink?.textContent?.trim(),
-            instructor: cells[2].textContent?.trim(),
+            instructor: instructorRaw,
             type: cells[3].textContent?.trim(),
             modality: cells[4].textContent?.trim(),
             status: cells[5].textContent?.trim(),

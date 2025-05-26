@@ -1,9 +1,17 @@
-type ClassScheduleEntry = {
+export type ClassScheduleEntry = {
   day: string;
   startTime: string;
   endTime: string;
   startPeriod: string;
   endPeriod: string;
+};
+
+export type AcademicUnit = {
+  shortName: string;
+  location: {
+    type: string;
+    value: { coordinates: [number, number]; type: string };
+  };
 };
 
 const scheduleTimes: Record<string, { start: string; end: string }> = {
@@ -33,6 +41,49 @@ const dayMap: Record<string, string> = {
   5: "Thursday",
   6: "Friday",
   7: "Saturday",
+};
+
+export const academicUnits: Record<string, AcademicUnit> = {
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM ADMINISTRAÇÃO": {
+    shortName: "PPGA",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.19753457434268, -5.838500531710352],
+        type: "Point",
+      },
+    },
+  },
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM TECNOLOGIA DA INFORMAÇÃO": {
+    shortName: "PPGTI",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.20545452790071, -5.832295943261201],
+        type: "Point",
+      },
+    },
+  },
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM CIÊNCIA, TECNOLOGIA E INOVAÇÃO": {
+    shortName: "PPGCTI",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.1993544215201, -5.841514491832527],
+        type: "Point",
+      },
+    },
+  },
+  "PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA APLICADA E ESTATÍSTICA": {
+    shortName: "PPGMAE",
+    location: {
+      type: "geo:json",
+      value: {
+        coordinates: [-35.20039259969485, -5.8411645284666065],
+        type: "Point",
+      },
+    },
+  },
 };
 
 export function expandFiwareClassPeriod(schedule: string) {
@@ -146,4 +197,68 @@ export function expandFiwareSchedule(schedule: string) {
       value: result,
     },
   };
+}
+
+export function parseWorkload(instructorRaw: string) {
+  const workloadMatch = instructorRaw.match(/\((\d+)\s*h\)\s*$/i);
+  if (workloadMatch) {
+    return Number(workloadMatch[1]);
+  }
+}
+
+export function removeWorkload(instructorRaw: string) {
+  return instructorRaw.replace(/\s*\(\d+\s*h\)\s*$/i, "").trim();
+}
+
+export function parseInstructors(instructorRaw: string) {
+  let instructors: string[] = [];
+  if (instructorRaw) {
+    // Remove all workload patterns (e.g., (15h)) before splitting
+    const cleaned = instructorRaw.replace(/\s*\(\d+\s*h\)\s*/gi, " ");
+    instructors = cleaned
+      .split(/\s*(?:,|\.|\se\s)\s*/)
+      .map((name) => name.trim())
+      .filter((name) => name.length > 0);
+  }
+
+  return instructors;
+}
+
+export function expandInstructorsFiware(instructor: string) {
+  const instructors = parseInstructors(instructor);
+
+  if (instructors.length === 0) {
+    return {
+      instructors: {
+        type: "StructuredValue",
+        value: [],
+      },
+    };
+  }
+
+  return {
+    instructors: {
+      type: "StructuredValue",
+      value: instructors.map((name) => ({
+        name,
+      })),
+    },
+  };
+}
+
+export function expandFiwareWorkload(workload: number | undefined) {
+  return workload
+    ? {
+        workload: {
+          type: "Number",
+          value: workload,
+          metadata: {
+            unitCode: {
+              type: "Text",
+              value: "HUR",
+            },
+          },
+        },
+      }
+    : {};
 }
