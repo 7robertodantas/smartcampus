@@ -1,34 +1,29 @@
 {
+  "id": null,
   "uid": "smartcampus-dashboard",
-  "title": "SmartCampus – Estação Meteorológica (Dados Reais)",
+  "title": "SmartCampus Dashboard",
+  "tags": ["weather", "campus", "smartcity"],
   "timezone": "browser",
-  "editable": true,
-  "refresh": "30s",
-  "time": {
-    "from": "now-24h",
-    "to": "now"
-  },
-  "schemaVersion": 38,
+  "schemaVersion": 37,
   "version": 1,
+  "refresh": "30s",
   "panels": [
     {
-      "title": "Atualizações por Timestamp",
       "type": "timeseries",
-      "datasource": "InfluxDB",
+      "title": "Weather Code (CampusNatal)",
+      "id": 1,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
       "targets": [
         {
           "refId": "A",
-          "query": "SELECT mean(\"modDate\") FROM \"WeatherStation\" WHERE $timeFilter GROUP BY time(1h) fill(null)"
+          "query": "SELECT weathercode FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
+          "rawQuery": true,
+          "resultFormat": "time_series"
         }
       ],
-      "fieldConfig": {
-        "defaults": {
-          "unit": "s",
-          "color": {
-            "mode": "palette-classic"
-          }
-        }
-      },
       "gridPos": {
         "x": 0,
         "y": 0,
@@ -37,22 +32,47 @@
       }
     },
     {
-      "title": "Últimos registros da estação",
-      "type": "table",
-      "datasource": "InfluxDB",
+      "type": "stat",
+      "title": "Último Weather Code",
+      "id": 2,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
+      },
       "targets": [
         {
           "refId": "B",
-          "query": "SELECT \"creDate\", \"modDate\", \"entity_id\" FROM \"WeatherStation\" ORDER BY time DESC LIMIT 20"
+          "query": "SELECT LAST(weathercode) FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
+          "rawQuery": true
         }
       ],
-      "options": {
-        "showHeader": true
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 6,
+        "h": 8
+      }
+    },
+    {
+      "type": "table",
+      "title": "Histórico de Weather Code",
+      "id": 3,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P951FEA4DE68E13C5"
       },
+      "targets": [
+        {
+          "refId": "C",
+          "query": "SELECT weathercode, time FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
+          "rawQuery": true,
+          "resultFormat": "table"
+        }
+      ],
       "gridPos": {
         "x": 0,
         "y": 8,
-        "w": 12,
+        "w": 18,
         "h": 10
       }
     }

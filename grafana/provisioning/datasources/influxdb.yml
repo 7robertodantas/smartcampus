@@ -10,3 +10,17 @@ datasources:
     isDefault: true
     version: 1
     editable: true
+    jsonData:
+      httpMode: POST
+      httpHeaderName1: ""
+      timeInterval: "1m"
+      tlsSkipVerify: true
+      httpHeaderName2: ""
+      httpHeaderName3: ""
+      httpHeaderName4: ""
+      httpHeaderName5: ""
+      httpHeaderName6: ""
+      httpHeaderName7: ""
+      httpHeaderName8: ""
+      httpHeaderName9: ""
+      httpHeaderName10: ""
