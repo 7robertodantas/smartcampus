@@ -1,0 +1,60 @@
+{
+  "uid": "smartcampus-dashboard",
+  "title": "SmartCampus – Estação Meteorológica (Dados Reais)",
+  "timezone": "browser",
+  "editable": true,
+  "refresh": "30s",
+  "time": {
+    "from": "now-24h",
+    "to": "now"
+  },
+  "schemaVersion": 38,
+  "version": 1,
+  "panels": [
+    {
+      "title": "Atualizações por Timestamp",
+      "type": "timeseries",
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "refId": "A",
+          "query": "SELECT mean(\"modDate\") FROM \"WeatherStation\" WHERE $timeFilter GROUP BY time(1h) fill(null)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "color": {
+            "mode": "palette-classic"
+          }
+        }
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      }
+    },
+    {
+      "title": "Últimos registros da estação",
+      "type": "table",
+      "datasource": "InfluxDB",
+      "targets": [
+        {
+          "refId": "B",
+          "query": "SELECT \"creDate\", \"modDate\", \"entity_id\" FROM \"WeatherStation\" ORDER BY time DESC LIMIT 20"
+        }
+      ],
+      "options": {
+        "showHeader": true
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 10
+      }
+    }
+  ]
+}
