@@ -5,12 +5,12 @@
   "tags": ["weather", "campus", "smartcity"],
   "timezone": "browser",
   "schemaVersion": 37,
-  "version": 1,
+  "version": 3,
   "refresh": "30s",
   "panels": [
     {
       "type": "timeseries",
-      "title": "Weather Code (CampusNatal)",
+      "title": "Weather Code (Realtime)",
       "id": 1,
       "datasource": {
         "type": "influxdb",
@@ -19,7 +19,7 @@
       "targets": [
         {
           "refId": "A",
-          "query": "SELECT weathercode FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
+          "query": "SELECT weathercode FROM WeatherStation WHERE $timeFilter",
           "rawQuery": true,
           "resultFormat": "time_series"
         }
@@ -42,10 +42,23 @@
       "targets": [
         {
           "refId": "B",
-          "query": "SELECT LAST(weathercode) FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
+          "query": "SELECT LAST(weathercode) FROM WeatherStation WHERE $timeFilter",
           "rawQuery": true
         }
       ],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "Céu limpo" } } },
+            { "type": "value", "options": { "1": { "text": "Parcialmente nublado" } } },
+            { "type": "value", "options": { "2": { "text": "Nublado" } } },
+            { "type": "value", "options": { "61": { "text": "Chuva leve" } } },
+            { "type": "value", "options": { "80": { "text": "Chuva forte" } } },
+            { "type": "value", "options": { "95": { "text": "Tempestade" } } }
+          ]
+        },
+        "overrides": []
+      },
       "gridPos": {
         "x": 12,
         "y": 0,
@@ -64,11 +77,32 @@
       "targets": [
         {
           "refId": "C",
-          "query": "SELECT weathercode, time FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
+          "query": "SELECT weathercode, time FROM WeatherStation WHERE $timeFilter",
           "rawQuery": true,
           "resultFormat": "table"
         }
       ],
+      "fieldConfig": {
+        "overrides": [
+          {
+            "matcher": { "id": "byName", "options": "weathercode" },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  { "type": "value", "options": { "0": { "text": "Céu limpo" } } },
+                  { "type": "value", "options": { "1": { "text": "Parcialmente nublado" } } },
+                  { "type": "value", "options": { "2": { "text": "Nublado" } } },
+                  { "type": "value", "options": { "61": { "text": "Chuva leve" } } },
+                  { "type": "value", "options": { "80": { "text": "Chuva forte" } } },
+                  { "type": "value", "options": { "95": { "text": "Tempestade" } } }
+                ]
+              }
+            ]
+          }
+        ],
+        "defaults": {}
+      },
       "gridPos": {
         "x": 0,
         "y": 8,

@@ -42,7 +42,47 @@ services:
       - influxdb-storage:/var/lib/influxdb
     networks:
       - fiware
-      
+  cygnus:
+    image: fiware/cygnus-ngsi
+    container_name: cygnus
+    depends_on:
+      - influxdb
+    ports:
+      - "5050:5050"
+    environment:
+      - CYGNUS_INFLUXDB_HOST=influxdb
+      - CYGNUS_INFLUXDB_PORT=8086
+      - CYGNUS_INFLUXDB_DBNAME=smartcampus
+      - CYGNUS_LOG_LEVEL=DEBUG  
+      - CYGNUS_INFLUXDB_USERNAME=
+      - CYGNUS_INFLUXDB_PASSWORD=
+      - CYGNUS_SERVICE_PORT=5050
+      - CYGNUS_SERVICE_PORT_ADMIN=5080
+  subscription-registrar:
+    build:
+      context: ./services
+      dockerfile: Dockerfile
+      args:
+        - APP_FILE=dummy 
+        - CONFIG=subscription
+    depends_on:
+      - orion
+      - cygnus
+    networks:
+      - fiware
+  weather-orion-cron:
+    build:
+      context: ./services
+      dockerfile: Dockerfile
+      args:
+        - APP_FILE=send_weather_to_orion
+        - CONFIG=cron
+    container_name: weather-orion-cron
+    depends_on:
+      - orion
+    networks:
+      - fiware
+     
   mongo:
     image: mongo:8.0
     volumes:
