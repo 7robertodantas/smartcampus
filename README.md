@@ -19,7 +19,7 @@ To run the full environment locally, follow these steps:
 
 ```bash
 git clone https://github.com/7robertodantas/smart-campus.git
-cd smart-campus
+cd smartcampus
 ```
 
 ### 2. Prerequisites
