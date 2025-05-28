@@ -1,6 +1,7 @@
 from pymongo import MongoClient
 from influxdb import InfluxDBClient
 from datetime import datetime
+import time
 
 mongo_client = MongoClient("mongodb://mongo:27017")
 mongo_db = mongo_client["orion"]
@@ -62,3 +63,16 @@ for doc in docs:
         count += 1
 
 print(f"\n{count} documentos migrados do Mongo para o Influx.")
+
+def main_loop():
+    print("Starting continuous sync between MongoDB and InfluxDB...")
+    while True:
+        for doc in collection.find():
+            point = convert_to_influx(doc)
+            if point:
+                influx_client.write_points([point])
+        print("Waiting 30 seconds...")
+        time.sleep(30)
+
+if __name__ == "__main__":
+    main_loop()

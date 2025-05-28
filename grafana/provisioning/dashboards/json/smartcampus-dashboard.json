@@ -2,79 +2,201 @@
   "id": null,
   "uid": "smartcampus-dashboard",
   "title": "SmartCampus Dashboard",
-  "tags": ["weather", "campus", "smartcity"],
+  "tags": ["weather", "campus", "smartcity", "courses"],
   "timezone": "browser",
   "schemaVersion": 37,
-  "version": 1,
+  "version": 6,
   "refresh": "30s",
   "panels": [
     {
       "type": "timeseries",
-      "title": "Weather Code (CampusNatal)",
+      "title": "Weather Code (Realtime)",
       "id": 1,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
-      },
-      "targets": [
-        {
-          "refId": "A",
-          "query": "SELECT weathercode FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
-          "rawQuery": true,
-          "resultFormat": "time_series"
-        }
-      ],
-      "gridPos": {
+      "datasource": "InfluxDB",
+      "targets": [{
+        "refId": "A",
+        "query": "SELECT weathercode FROM WeatherStation WHERE $timeFilter",
+        "rawQuery": true,
+        "resultFormat": "time_series"
+      }],
+       "gridPos": {
         "x": 0,
-        "y": 0,
-        "w": 12,
-        "h": 8
+        "y": 26,
+        "w": 24,
+        "h": 10
       }
     },
     {
       "type": "stat",
       "title": "Último Weather Code",
       "id": 2,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+      "datasource": "InfluxDB",
+      "targets": [{
+        "refId": "B",
+        "query": "SELECT LAST(weathercode) FROM WeatherStation WHERE $timeFilter",
+        "rawQuery": true
+      }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": { "text": "Céu limpo" },
+                "1": { "text": "Parcialmente nublado" },
+                "2": { "text": "Nublado" },
+                "61": { "text": "Chuva leve" },
+                "80": { "text": "Chuva forte" },
+                "95": { "text": "Tempestade" }
+              }
+            }
+          ]
+        },
+        "overrides": []
       },
-      "targets": [
-        {
-          "refId": "B",
-          "query": "SELECT LAST(weathercode) FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
-          "rawQuery": true
-        }
-      ],
-      "gridPos": {
-        "x": 12,
-        "y": 0,
-        "w": 6,
-        "h": 8
+       "gridPos": {
+        "x": 0,
+        "y": 26,
+        "w": 24,
+        "h": 4
       }
     },
     {
       "type": "table",
       "title": "Histórico de Weather Code",
       "id": 3,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
-      },
+      "datasource": "InfluxDB",
+      "targets": [{
+        "refId": "C",
+        "query": "SELECT weathercode, time FROM WeatherStation WHERE $timeFilter",
+        "rawQuery": true,
+        "resultFormat": "table"
+      }],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [{
+          "matcher": { "id": "byName", "options": "weathercode" },
+          "properties": [{
+            "id": "mappings",
+            "value": [
+              {
+                "type": "value",
+                "options": {
+                  "0": { "text": "Céu limpo" },
+                  "1": { "text": "Parcialmente nublado" },
+                  "2": { "text": "Nublado" },
+                  "61": { "text": "Chuva leve" },
+                  "80": { "text": "Chuva forte" },
+                  "95": { "text": "Tempestade" }
+                }
+              }
+            ]
+          }]
+        }]
+       },
+      "gridPos": {
+        "x": 0,
+        "y": 26,
+        "w": 24,
+        "h": 10
+      }
+    },
+    {
+      "type": "table",
+      "title": "Resumo de Cursos",
+      "id": 4,
+      "datasource": "InfluxDB",
       "targets": [
         {
-          "refId": "C",
-          "query": "SELECT weathercode, time FROM WeatherStation WHERE entity_id = 'WeatherStation:CampusNatal' AND $timeFilter",
+          "refId": "F",
+          "query": "SELECT time, courseCode, courseName, enrollments, status FROM CourseInstance ORDER BY time DESC LIMIT 5",
           "rawQuery": true,
           "resultFormat": "table"
         }
       ],
+      "options": {
+        "showHeader": true,
+        "sortBy": [
+          {
+            "displayName": "Horário",
+            "desc": true
+          }
+        ]
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "time"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Horário"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "courseCode"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Código"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "courseName"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Curso"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "enrollments"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Inscritos"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "status"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Status"
+              }
+            ]
+          }
+        ]
+      },
       "gridPos": {
         "x": 0,
-        "y": 8,
-        "w": 18,
+        "y": 26,
+        "w": 24,
         "h": 10
       }
     }
+
   ]
 }

@@ -49,7 +49,6 @@ services:
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - fiware
-
   weather-alert-course:
     build:
       context: ./services
@@ -67,7 +66,6 @@ services:
       - fiware
     volumes:
       - ./services:/app/services
-
   weather-context-enricher:
     build:
       context: ./services
@@ -83,7 +81,21 @@ services:
       - orion
     networks:
       - fiware
-
+  mongo_to_influx:
+    build:
+      context: ./services
+      args:
+        APP_FILE: mongo_to_influx
+    environment:
+      APP_FILE: mongo_to_influx
+      CONFIG: script
+    volumes:
+      - ./services:/app
+    depends_on:
+      - mongo
+      - influxdb
+    networks:
+      - fiware
   weather-simulator:
     build:
       context: ./services
@@ -98,7 +110,6 @@ services:
       - orion
     networks:
       - fiware
-
   course-instance-simulator:
     build:
       context: ./services
@@ -116,6 +127,7 @@ services:
       - fiware
     volumes:
       - ./entities:/app/entities:ro
+      
 
 networks:
   fiware:
