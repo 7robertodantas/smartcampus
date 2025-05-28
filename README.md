@@ -28,6 +28,9 @@ To get started with Smart Campus, follow these steps:
     ```bash
     docker-compose up --build
     ```
+    ```bash
+    docker-compose run --rm mongo_to_influx
+    ```
 
 4. Access the application at `http://orion:1026`.
 

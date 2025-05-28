@@ -9,13 +9,46 @@ services:
     networks:
       - fiware
 
+  grafana:
+    image: grafana/grafana:12.0.1
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_USERS_DEFAULT_THEME=light
+      - GF_USERS_AUTO_ASSIGN_ORG_ROLE=Viewer
+      - GF_FEATURE_TOGGLES_ENABLE=false
+      - GF_DISABLE_SANDBOX=true
+    volumes:
+    - grafana-storage:/var/lib/grafana
+    - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+    - ./grafana/provisioning/dashboards/json:/etc/grafana/provisioning/dashboards/json
+    - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+    - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+    networks:
+      - fiware
+
+  influxdb:
+    image: influxdb:1.8
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - INFLUXDB_DB=smartcampus
+      - INFLUXDB_HTTP_AUTH_ENABLED=false
+    volumes:
+      - influxdb-storage:/var/lib/influxdb
+    networks:
+      - fiware
+      
   mongo:
     image: mongo:8.0
     volumes:
       - ./mongodb/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - fiware
-
   weather-alert-course:
     build:
       context: ./services
@@ -31,7 +64,8 @@ services:
       - orion
     networks:
       - fiware
-
+    volumes:
+      - ./services:/app/services
   weather-context-enricher:
     build:
       context: ./services
@@ -47,7 +81,21 @@ services:
       - orion
     networks:
       - fiware
-
+  mongo_to_influx:
+    build:
+      context: ./services
+      args:
+        APP_FILE: mongo_to_influx
+    environment:
+      APP_FILE: mongo_to_influx
+      CONFIG: script
+    volumes:
+      - ./services:/app
+    depends_on:
+      - mongo
+      - influxdb
+    networks:
+      - fiware
   weather-simulator:
     build:
       context: ./services
@@ -62,7 +110,6 @@ services:
       - orion
     networks:
       - fiware
-
   course-instance-simulator:
     build:
       context: ./services
@@ -80,6 +127,11 @@ services:
       - fiware
     volumes:
       - ./entities:/app/entities:ro
+      
 
 networks:
   fiware:
+
+volumes:
+  grafana-storage:
+  influxdb-storage:

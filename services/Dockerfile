@@ -3,6 +3,7 @@ FROM python:3.10-slim
 # Set the working directory
 WORKDIR /app
 
+# Install system dependencies
 # Install system dependencies required for gunicorn
 RUN apt-get update && apt-get install -y --no-install-recommends \
     gcc \
@@ -19,11 +20,12 @@ EXPOSE 5000
 ARG APP_FILE
 ENV APP_FILE=${APP_FILE}
 
-# Copy the application code
+# GARANTIR que a aplicação existe antes de copiar
 COPY fiware.py .
 COPY ${APP_FILE}.py .
 
 ARG CONFIG=server
 ENV CONFIG=${CONFIG}
 
+# Default CMD
 CMD ["sh", "-c", "if [ \"$CONFIG\" = \"server\" ]; then gunicorn --bind 0.0.0.0:5000 ${APP_FILE}:app; else python ${APP_FILE}.py; fi"]
